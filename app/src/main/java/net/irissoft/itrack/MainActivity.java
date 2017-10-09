@@ -17,7 +17,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     GPSTracker gps;
-    Button btnShowLocation, stopgetlocation, btnshowalldata;
+    Button btnShowLocation, stopgetlocation, btnshowalldata,btnsyncdata;
 
 
     Date date = new Date();
@@ -77,6 +77,21 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Going Second Page", Toast.LENGTH_SHORT).show();
             }
         });
+
+        btnsyncdata = (Button) findViewById(R.id.btnsyncdata);
+        btnsyncdata.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                Intent i = new Intent(MainActivity.this, VollyDataSyncActivity.class);
+                startActivity(i);
+
+                Toast.makeText(getApplicationContext(), "Going DataSync Page", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
 
     }

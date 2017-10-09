@@ -24,4 +24,10 @@
         android:layout_height="wrap_content"
         android:text="Show" />
 
+    <Button
+        android:id="@+id/btnsyncdata"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sync page" />
+
 </LinearLayout>
