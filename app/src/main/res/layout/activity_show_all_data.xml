@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.irissoft.itrack.ShowAllDataActivity"
+    android:orientation="vertical">
+
+
+    <Button
+        android:id="@+id/showall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show" />
+    <Button
+        android:id="@+id/clearall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="clear" />
+
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableLayout
+                android:id="@+id/dataTable"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#000000">
+
+                <TableRow
+                    android:background="#ffffff"
+                    android:layout_margin="2dp"
+                    >
+                </TableRow>
+            </TableLayout>
+
+
+        </HorizontalScrollView>
+
+    </ScrollView>
+
+</LinearLayout>
