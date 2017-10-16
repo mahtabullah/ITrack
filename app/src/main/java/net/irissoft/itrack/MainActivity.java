@@ -17,9 +17,10 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     GPSTracker gps;
-    Button btnShowLocation, stopgetlocation, btnshowalldata,btnsyncdata;
 
+    Button btnShowLocation, stopgetlocation, btnshowalldata, btnsyncdata;
 
+    GlobalClass Gs = new GlobalClass();
     Date date = new Date();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
@@ -36,8 +37,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        hd.postDelayed(runnable, 0);
+        String User_id = getIntent().getStringExtra("User_id");
 
+       Gs.set_userid(Integer.parseInt(User_id));
+
+       Toast.makeText(getApplicationContext(), Integer.toString(Gs.get_userid()), Toast.LENGTH_LONG).show();
+
+        hd.postDelayed(runnable, 0);
+        Toast.makeText(getApplicationContext(), "GPS Start" + Gs.get_userid(), Toast.LENGTH_SHORT).show();
         btnShowLocation = (Button) findViewById(R.id.getlocation);
 
         // show location button click event
@@ -73,8 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent i = new Intent(MainActivity.this, ShowAllDataActivity.class);
                 startActivity(i);
-
-                Toast.makeText(getApplicationContext(), "Going Second Page", Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(getApplicationContext(), "Going Second Page", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -86,12 +92,9 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent i = new Intent(MainActivity.this, VollyDataSyncActivity.class);
                 startActivity(i);
-
-                Toast.makeText(getApplicationContext(), "Going DataSync Page", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(getApplicationContext(), "Going DataSync Page", Toast.LENGTH_SHORT).show();
             }
         });
-
-
 
 
     }
@@ -111,28 +114,29 @@ public class MainActivity extends AppCompatActivity {
         Date date = new Date();
         // check if GPS enabled
         if (gps.canGetLocation()) {
+            String Viewtxt = "";
 
             double _latitude = gps.getLatitude();
             double _longitude = gps.getLongitude();
 
-            // Viewtxt += "Lat:" + _latitude + " | Long: " + _longitude +" | Date: " + dateFormat.format(date).toString() + "\n";
-            InsertIntoDatabase(1,Double.toString(_latitude), Double.toString(_longitude), dateFormat.format(date));
+            //  Viewtxt =Gs.get_userid()+"Lat:" + _latitude + " | Long: " + _longitude +" | Date: " + dateFormat.format(date).toString();
 
+            // Toast.makeText(getApplicationContext(), Viewtxt, Toast.LENGTH_SHORT).show();
+            InsertIntoDatabase(Gs.get_userid(), Double.toString(_latitude), Double.toString(_longitude), dateFormat.format(date));
 
         } else {
+            hd.removeCallbacks(runnable);
             gps.showSettingsAlert();
         }
 
     }
 
-    void InsertIntoDatabase(int userid,String lat, String lon, String time) {
+    void InsertIntoDatabase(int userid, String lat, String lon, String time) {
 
         Database DBin = new Database(getApplicationContext());
 
-        DBin.allLocation(new Location(userid,lat, lon, time));
-
-        Toast.makeText(getApplicationContext(), " Data Save Successfullly", Toast.LENGTH_SHORT).show();
-
+        DBin.allLocation(new Location(userid, lat, lon, time, 0));
+        //   Toast.makeText(getApplicationContext(), " Data Save Successfullly", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -141,9 +145,14 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
 
             getGpsLocation();
+
             hd.postDelayed(this, gpstime);
         }
     };
+
+    @Override
+    public void onBackPressed() {
+    }
 
 
 }

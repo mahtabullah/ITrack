@@ -11,24 +11,27 @@ public class Location {
     String _latitude;
     String _longitude;
     String _created_at;
+    int _Sync_status;
 
     public Location() {
 
     }
 
-    public Location(int id, int userid, String latitude, String longitude, String created_at) {
+    public Location(int id, int userid, String latitude, String longitude, String created_at,int Sync_status) {
         this._id = id;
         this._userid = userid;
         this._latitude = latitude;
         this._longitude = longitude;
         this._created_at = created_at;
+        this._Sync_status=Sync_status;
     }
 
-    public Location(int userid, String latitude, String longitude, String created_at) {
+    public Location(int userid, String latitude, String longitude, String created_at,int Sync_status) {
         this._userid = userid;
         this._latitude = latitude;
         this._longitude = longitude;
         this._created_at = created_at;
+        this._Sync_status=Sync_status;
     }
 
     public int get_id() {
@@ -71,4 +74,10 @@ public class Location {
         this._created_at = created_at;
     }
 
+    public int get_Sync_status() {
+        return _Sync_status;   }
+
+    public void set_Sync_status(int Sync_status) {
+        this._Sync_status = Sync_status;
+    }
 }
